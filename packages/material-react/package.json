@@ -1,0 +1,47 @@
+{
+  "name": "@snail-design/material-react",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "start-storybook -p 6006",
+    "build-stories": "build-storybook",
+    "test": "jest --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@snail-design/material-css": "workspace:../material-css",
+    "@snail-design/tsconfig": "workspace:../snail-tsconfig",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-docs": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/builder-webpack5": "^6.5.10",
+    "@storybook/manager-webpack5": "^6.5.10",
+    "@storybook/react": "^6.5.10",
+    "@swc/core": "^1.2.244",
+    "@swc/jest": "^0.2.22",
+    "@testing-library/react": "^13.3.0",
+    "@types/jest": "^28.1.8",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.4",
+    "eslint": "^8.15.0",
+    "eslint-config-snail": "workspace:../eslint-config-snail",
+    "jest": "^29.0.1",
+    "jest-environment-jsdom": "^29.0.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.5.3",
+    "webpack": "^5.74.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

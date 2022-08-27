@@ -1,0 +1,65 @@
+import { Meta, IconGallery, IconItem } from '@storybook/addon-docs'
+
+<Meta title="Styles/Icons" />
+
+# Icons
+
+## UI actions
+
+export const uiActionsIconNames = ['search', 'home', 'menu']
+
+<IconGallery>
+  {uiActionsIconNames.map((name) => (
+    <IconItem name={name}>
+      <i class="material-icon">{name}</i>
+    </IconItem>
+  ))}
+</IconGallery>
+
+## Social
+
+export const socialIconNames = ['person', 'group', 'share']
+
+<IconGallery>
+  {socialIconNames.map((name) => (
+    <IconItem name={name}>
+      <i class="material-icon">{name}</i>
+    </IconItem>
+  ))}
+</IconGallery>
+
+## Common actions
+
+export const commonActionsIconNames = ['account_circle', 'info', 'visibility']
+
+<IconGallery>
+  {commonActionsIconNames.map((name) => (
+    <IconItem name={name}>
+      <i class="material-icon">{name}</i>
+    </IconItem>
+  ))}
+</IconGallery>
+
+## Communication
+
+export const communicationIconNames = ['mail', 'call', 'notifications']
+
+<IconGallery>
+  {communicationIconNames.map((name) => (
+    <IconItem name={name}>
+      <i class="material-icon">{name}</i>
+    </IconItem>
+  ))}
+</IconGallery>
+
+## Photo & Image
+
+export const photoImageIconNames = ['edit', 'photo_camera', 'filter_alt']
+
+<IconGallery>
+  {photoImageIconNames.map((name) => (
+    <IconItem name={name}>
+      <i class="material-icon">{name}</i>
+    </IconItem>
+  ))}
+</IconGallery>
