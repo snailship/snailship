@@ -51,3 +51,10 @@ export interface FabProps extends BaseButtonProps, IconableProps {
 export interface ExtendedFabProps
   extends Partial<Omit<FabProps, 'size'>>,
     LabelableProps {}
+
+export interface IconButtonProps extends BaseButtonProps, IconableProps {
+  /**
+   * Five types of button
+   */
+  variant?: 'filled' | 'outlined' | 'standard' | 'tonal'
+}

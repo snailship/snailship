@@ -6,7 +6,6 @@ describe('ExtendedFab', () => {
   it('renders all colors', () => {
     const { rerender } = render(<ExtendedFab icon="edit" color="surface" />)
     expect(screen.getByRole('button').className).toContain('surface')
-
     ;['primary', 'secondary', 'tertiary'].forEach((color) => {
       rerender(
         <ExtendedFab
