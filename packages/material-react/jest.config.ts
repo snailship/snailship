@@ -8,7 +8,7 @@ const config: Config = {
     '!src/**/demos/*',
     '!src/**/__test__/*',
   ],
-  coverageReporters: ['text', 'html'],
+  coverageReporters: ['text', 'html', 'lcovonly'],
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },

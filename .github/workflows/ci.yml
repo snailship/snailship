@@ -148,3 +148,7 @@ jobs:
         run: pnpm install
       - name: Jest
         run: pnpm run test
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
