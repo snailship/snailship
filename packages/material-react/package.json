@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "start-storybook -p 6006",
     "build-stories": "build-storybook",
-    "test": "jest"
+    "lint": "eslint src --ext js,ts,tsx",
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",

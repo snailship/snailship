@@ -177,10 +177,6 @@
 .material-icon-btn_filled,
 .material-icon-btn_tonal {
   @apply hover:shadow-1 hover:drop-shadow-1;
-}
-
-.material-icon-btn_filled,
-.material-icon-btn_tonal {
   @apply disabled:hover:shadow-none disabled:hover:drop-shadow-none;
 }
 
