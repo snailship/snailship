@@ -33,5 +33,4 @@ function bundleCss() {
 
 exports.clean = clean
 exports.compile = compileCss
-exports.bundle = bundleCss
-exports.default = gulp.series(clean, this.bundle)
+exports.default = gulp.series(clean, bundleCss)
