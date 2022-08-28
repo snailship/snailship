@@ -34,8 +34,46 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Install dependencies
         run: pnpm install
-  code-quality:
-    name: Code Quality
+  # building:
+  #   name: Building
+  #   needs: preparation
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #     - name: Restore Node.js modules
+  #       uses: actions/cache@v3.0.5
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+  #     - name: Type check
+  #       run: npx tsc --noEmit
+  #     - name: Compile
+  #       run: npx gulp compile
+  # perf-testing:
+  #   name: Performance Testing
+  #   needs: preparation
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #     - name: Restore Node.js modules
+  #       uses: actions/cache@v3.0.5
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+  #     - name: Compressed size
+  #       uses: preactjs/compressed-size-action@v2
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         build-script: gulp bundle
+  #         pattern: './dist/*.min.{js,css}'
+  code-linting:
+    name: Code Linting
     needs: preparation
     runs-on: ubuntu-latest
     steps:
@@ -62,66 +100,12 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Install dependencies
         run: pnpm install
-      - name: Prettier
-        run: npx prettier --check "**/*.{ts,tsx,md,js,css}"
+      - name: Cache lint reports
+        uses: actions/cache@v3.0.5
+        with:
+          path: '**/*-report.json'
       - name: Lint
         run: pnpm run lint
-  # building:
-  #   name: Building
-  #   needs: preparation
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16
-  #     - name: Restore Node.js modules
-  #       uses: actions/cache@v3.0.5
-  #       with:
-  #         path: node_modules
-  #         key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-  #     - name: Type check
-  #       run: npx tsc --noEmit
-  #     - name: Compile
-  #       run: npx gulp compile
-  code-security:
-    name: Code Security
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      actions: read
-      contents: read
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          queries: security-and-quality
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
-      - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@v2
-  # perf-testing:
-  #   name: Performance Testing
-  #   needs: preparation
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v3
-  #     - name: Restore Node.js modules
-  #       uses: actions/cache@v3.0.5
-  #       with:
-  #         path: node_modules
-  #         key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-  #     - name: Compressed size
-  #       uses: preactjs/compressed-size-action@v2
-  #       with:
-  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
-  #         build-script: gulp bundle
-  #         pattern: './dist/*.min.{js,css}'
   unit-testing:
     name: Unit Testing
     needs: preparation
@@ -148,10 +132,51 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Install dependencies
         run: pnpm install
+      - name: Cache unit test report
+        uses: actions/cache@v3.0.5
+        with:
+          path: '**/coverage/lcov.info'
       - name: Jest
         run: pnpm run test
+  code-quality:
+    name: Code Quality
+    needs:
+      - code-linting
+      - unit-testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Restore lint reports
+        uses: actions/cache@v3.0.5
+        with:
+          path: '**/*-report.json'
+      - name: Restore unit test report
+        uses: actions/cache@v3.0.5
+        with:
+          path: '**/coverage/lcov.info'
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  code-security:
+    name: Code Security
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          queries: security-and-quality
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v2

@@ -7,7 +7,7 @@
     "dev": "start-storybook -p 6006",
     "build-stories": "build-storybook",
     "lint": "pnpm run eslint && pnpm run typelint",
-    "eslint": "eslint src --ext js,ts,tsx",
+    "eslint": "eslint src --ext js,ts,tsx -f json -o eslint-report.json",
     "typelint": "tsc --noEmit",
     "test": "jest --coverage"
   },

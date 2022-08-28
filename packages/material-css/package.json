@@ -9,7 +9,7 @@
   "scripts": {
     "build": "gulp",
     "compile": "gulp compile",
-    "lint": "stylelint src/**/*.css"
+    "lint": "stylelint src/**/*.css -f json > stylelint-report.json"
   },
   "keywords": [],
   "author": "",
