@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "start-storybook -p 6006",
     "build-stories": "build-storybook",
-    "lint": "eslint && type-check",
+    "lint": "pnpm run eslint && pnpm run type-check",
     "eslint": "eslint src --ext js,ts,tsx",
     "type-check": "tsc --noEmit",
     "test": "jest --coverage"
