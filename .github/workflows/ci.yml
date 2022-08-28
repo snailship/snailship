@@ -100,12 +100,13 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Install dependencies
         run: pnpm install
-      - name: Cache lint reports
-        uses: actions/cache@v3.0.5
-        with:
-          path: '**/*-report.json'
       - name: Lint
         run: pnpm run lint
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: lint-report
+          path: '**/*-report.json'
   unit-testing:
     name: Unit Testing
     needs: preparation
@@ -132,12 +133,13 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Install dependencies
         run: pnpm install
-      - name: Cache unit test report
-        uses: actions/cache@v3.0.5
-        with:
-          path: '**/coverage/lcov.info'
       - name: Jest
         run: pnpm run test
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: '**/coverage/lcov.info'
   code-quality:
     name: Code Quality
     needs:
@@ -149,14 +151,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Restore lint reports
-        uses: actions/cache@v3.0.5
+      - name: Download code coverage results
+        uses: actions/download-artifact@v3
         with:
-          path: '**/*-report.json'
-      - name: Restore unit test report
-        uses: actions/cache@v3.0.5
-        with:
-          path: '**/coverage/lcov.info'
+          path: .
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
