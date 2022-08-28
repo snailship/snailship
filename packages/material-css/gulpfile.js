@@ -12,6 +12,13 @@ function clean(done) {
   done(0)
 }
 
+function compileCss() {
+  return gulp
+    .src('src/index.css')
+    .pipe(postcss())
+    .pipe(gulp.dest(UMD_OUTPUT_PATH))
+}
+
 function bundleCss() {
   return gulp
     .src('src/index.css')
@@ -25,5 +32,6 @@ function bundleCss() {
 }
 
 exports.clean = clean
+exports.compile = compileCss
 exports.bundle = bundleCss
 exports.default = gulp.series(clean, this.bundle)

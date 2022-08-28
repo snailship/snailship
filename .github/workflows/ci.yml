@@ -1,0 +1,146 @@
+name: Continuous Integration
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+jobs:
+  preparation:
+    name: Preparation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+          run_install: false
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      - name: Cache Node.js modules
+        id: cache-node-modules
+        uses: actions/cache@v3.0.5
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install
+  code-quality:
+    name: Code Quality
+    needs: preparation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+          run_install: false
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      - name: Cache Node.js modules
+        id: cache-node-modules
+        uses: actions/cache@v3.0.5
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Prettier
+        run: npx prettier --check .
+      - name: Lint
+        run: pnpm run lint
+  # building:
+  #   name: Building
+  #   needs: preparation
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #     - name: Restore Node.js modules
+  #       uses: actions/cache@v3.0.5
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+  #     - name: Type check
+  #       run: npx tsc --noEmit
+  #     - name: Compile
+  #       run: npx gulp compile
+  code-security:
+    name: Code Security
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          queries: security-and-quality
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v2
+  # perf-testing:
+  #   name: Performance Testing
+  #   needs: preparation
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+  #     - name: Restore Node.js modules
+  #       uses: actions/cache@v3.0.5
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+  #     - name: Compressed size
+  #       uses: preactjs/compressed-size-action@v2
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         build-script: gulp bundle
+  #         pattern: './dist/*.min.{js,css}'
+  unit-testing:
+    name: Unit Testing
+    needs: preparation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+          run_install: false
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      - name: Cache Node.js modules
+        id: cache-node-modules
+        uses: actions/cache@v3.0.5
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Jest
+        run: pnpm run test
