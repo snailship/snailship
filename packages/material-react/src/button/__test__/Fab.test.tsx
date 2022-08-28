@@ -6,7 +6,6 @@ describe('Fab', () => {
   it('renders all colors', () => {
     const { rerender } = render(<Fab icon="edit" color="surface" />)
     expect(screen.getByRole('button').className).toContain('surface')
-
     ;['primary', 'secondary', 'tertiary'].forEach((color) => {
       rerender(
         <Fab
@@ -21,7 +20,6 @@ describe('Fab', () => {
   it('renders all sizes', () => {
     const { rerender } = render(<Fab icon="edit" />)
     expect(screen.getByRole('button').className).toContain('medium')
-
     ;['large', 'small'].forEach((size) => {
       rerender(<Fab icon="edit" size={size as 'large' | 'small'} />)
       expect(screen.getByRole('button').className).toContain(size)
