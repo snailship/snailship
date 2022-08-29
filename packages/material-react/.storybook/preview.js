@@ -1,1 +1,1 @@
-import '@snailship/material-css/dist/index.css'
+import '@snailship/material-css/src/index.css'
