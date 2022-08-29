@@ -102,7 +102,6 @@ importers:
     specifiers:
       '@mdx-js/react': ^1.6.22
       '@snail-design/material-css': workspace:../material-css
-      '@snail-design/tsconfig': workspace:../snail-tsconfig
       '@storybook/addon-actions': ^6.5.10
       '@storybook/addon-docs': ^6.5.10
       '@storybook/addon-essentials': ^6.5.10
@@ -113,6 +112,7 @@ importers:
       '@swc/core': ^1.2.244
       '@swc/jest': ^0.2.22
       '@testing-library/react': ^12.1.0
+      '@tsconfig/create-react-app': ^1.0.2
       '@types/jest': ^28.1.8
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.4
@@ -128,7 +128,6 @@ importers:
     devDependencies:
       '@mdx-js/react': 1.6.22_react@17.0.2
       '@snail-design/material-css': link:../material-css
-      '@snail-design/tsconfig': link:../snail-tsconfig
       '@storybook/addon-actions': 6.5.10_sfoxds7t5ydpegc3knd667wn6m
       '@storybook/addon-docs': 6.5.10_5nevtfqy6r5zyzyjjbsynwciee
       '@storybook/addon-essentials': 6.5.10_rezwt5tne2nq4cdog4mk4ozxri
@@ -139,6 +138,7 @@ importers:
       '@swc/core': 1.2.244
       '@swc/jest': 0.2.22_@swc+core@1.2.244
       '@testing-library/react': 12.1.5_sfoxds7t5ydpegc3knd667wn6m
+      '@tsconfig/create-react-app': 1.0.2
       '@types/jest': 28.1.8
       '@types/react': 18.0.17
       '@types/react-dom': 18.0.6
@@ -4190,6 +4190,10 @@ packages:
   /@tootallnate/once/2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
+    dev: true
+
+  /@tsconfig/create-react-app/1.0.2:
+    resolution: {integrity: sha512-Vg+pErSM6hTcSzxPqNwFg0dk+y0R1Obp8uLV1MDdfd7j98FyOFqtqkdxb9wqIx9vtDW5GCH7zg6DyoHJzMT12g==}
     dev: true
 
   /@tsconfig/node10/1.0.9:

@@ -1,5 +1,5 @@
 {
-  "name": "@snail-design/material-react",
+  "name": "@snailship/material-react",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -16,8 +16,7 @@
   "license": "MIT",
   "devDependencies": {
     "@mdx-js/react": "^1.6.22",
-    "@snail-design/material-css": "workspace:../material-css",
-    "@snail-design/tsconfig": "workspace:../snail-tsconfig",
+    "@snailship/material-css": "workspace:../material-css",
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-docs": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",
@@ -28,6 +27,7 @@
     "@swc/core": "^1.2.244",
     "@swc/jest": "^0.2.22",
     "@testing-library/react": "^12.1.0",
+    "@tsconfig/create-react-app": "^1.0.2",
     "@types/jest": "^28.1.8",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
