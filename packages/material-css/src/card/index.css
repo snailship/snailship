@@ -1,0 +1,16 @@
+.material-card {
+  @apply w-fit rounded-xl flex flex-col items-start p-0;
+}
+
+.material-btn_elevated {
+  @apply bg-surface;
+  @apply shadow-1 drop-shadow-1 hover:shadow-2 hover:drop-shadow-2;
+}
+
+.material-card_outlined {
+  @apply bg-surface border border-outline;
+}
+
+.material-card_filled {
+  @apply bg-surface-variant;
+}
